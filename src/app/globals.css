@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #082049;
+}
+
+html,
+body {
+  background: var(--navy);
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-open-sans), system-ui, sans-serif;
+  font-weight: 400;
+}
+
+/* Scroll-reveal entry/exit states */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 700ms ease-out, transform 700ms ease-out;
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero text entrance — initial hidden state until JS adds .hero-in */
+.hero-fade {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.hero-in .hero-fade {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-in .hero-fade {
+  transition-property: opacity, transform;
+  transition-timing-function: ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .reveal,
+  .hero-fade {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

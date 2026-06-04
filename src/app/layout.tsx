@@ -11,11 +11,11 @@ const openSans = Open_Sans({
 
 // TODO: confirm final deployment domain for og:url and canonical
 export const metadata: Metadata = {
-  title: 'Heads & Hands in Research',
+  title: 'Minds & Hands in Research',
   description:
     "A study of how researchers across disciplines think and work alongside AI.",
   openGraph: {
-    title: 'Heads & Hands in Research',
+    title: 'Minds & Hands in Research',
     description:
       "A study of how researchers across disciplines think and work alongside AI.",
     type: 'website',

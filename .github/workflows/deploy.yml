@@ -30,26 +30,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Detect base path for project pages
-        id: base
-        run: |
-          # If the repo isn't named "<owner>.github.io", we're on a project page
-          # served at /<repo>/, so we need basePath/assetPrefix.
-          REPO_NAME="${GITHUB_REPOSITORY#*/}"
-          OWNER_NAME="${GITHUB_REPOSITORY%/*}"
-          if [ "${REPO_NAME,,}" = "${OWNER_NAME,,}.github.io" ]; then
-            echo "base=" >> "$GITHUB_OUTPUT"
-          else
-            echo "base=/${REPO_NAME}" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Build static site
-        env:
-          NEXT_PUBLIC_BASE_PATH: ${{ steps.base.outputs.base }}
         run: npm run build
 
       - name: Add .nojekyll
         run: touch out/.nojekyll
+
+      - name: Add CNAME for custom domain
+        run: echo "minds-and-hands.com" > out/CNAME
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

@@ -1,23 +1,22 @@
 import type { Metadata } from 'next'
-import { Open_Sans } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import './globals.css'
 
-const openSans = Open_Sans({
+const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-open-sans',
+  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: '--font-sans',
   display: 'swap',
 })
 
-// TODO: confirm final deployment domain for og:url and canonical
 export const metadata: Metadata = {
   title: 'Minds & Hands in Research',
   description:
-    "A study of how researchers across disciplines think and work alongside AI.",
+    'A study of how researchers across disciplines think and work alongside AI.',
   openGraph: {
     title: 'Minds & Hands in Research',
     description:
-      "A study of how researchers across disciplines think and work alongside AI.",
+      'A study of how researchers across disciplines think and work alongside AI.',
     type: 'website',
   },
 }
@@ -28,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={openSans.variable}>
+    <html lang="en" className={inter.variable}>
       <body>{children}</body>
     </html>
   )

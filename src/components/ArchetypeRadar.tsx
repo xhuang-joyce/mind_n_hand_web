@@ -23,16 +23,17 @@ const STAGE_SHORT = {
 
 function axisLabel(stage: number, locale: 'en' | 'zh'): string {
   const map = STAGE_SHORT[locale];
-  const short = map[stage as keyof typeof map];
-  return `Stage ${stage} / ${short}`;
+  return map[stage as keyof typeof map] ?? `Stage ${stage}`;
 }
 
 interface ArchetypeRadarProps {
   stages: RadarPoint[];
   locale: 'en' | 'zh';
+  /** Render compact mode without legend (parent draws its own) */
+  compact?: boolean;
 }
 
-export default function ArchetypeRadar({ stages, locale }: ArchetypeRadarProps) {
+export default function ArchetypeRadar({ stages, locale, compact = false }: ArchetypeRadarProps) {
   const data = [...stages]
     .sort((a, b) => a.stage - b.stage)
     .map(s => ({
@@ -42,13 +43,13 @@ export default function ArchetypeRadar({ stages, locale }: ArchetypeRadarProps) 
     }));
 
   return (
-    <div className="w-full h-[360px]">
+    <div className="w-full h-full min-h-[280px]">
       <ResponsiveContainer width="100%" height="100%">
-        <RadarChart data={data} outerRadius="70%">
-          <PolarGrid stroke="#D3D1C7" />
+        <RadarChart data={data} outerRadius="72%">
+          <PolarGrid stroke="rgba(255,255,255,0.16)" />
           <PolarAngleAxis
             dataKey="axis"
-            tick={{ fill: '#4B5563', fontSize: 11 }}
+            tick={{ fill: '#ffffff', fontSize: 11, fontWeight: 600 }}
           />
           <PolarRadiusAxis
             domain={[0, 100]}
@@ -59,21 +60,22 @@ export default function ArchetypeRadar({ stages, locale }: ArchetypeRadarProps) 
           <Radar
             name="Actual"
             dataKey="actual"
-            stroke="#1F4BA3"
-            fill="#1F4BA3"
-            fillOpacity={0.12}
+            stroke="#7CC4FF"
+            fill="#7CC4FF"
+            fillOpacity={0.18}
             strokeWidth={2}
           />
           <Radar
-            name="Desired"
+            name="Ideal"
             dataKey="desired"
-            stroke="#D97706"
+            stroke="#3E8BFF"
             fill="none"
             strokeWidth={2}
             strokeDasharray="5 4"
           />
         </RadarChart>
       </ResponsiveContainer>
+      {!compact && null}
     </div>
   );
 }

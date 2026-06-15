@@ -1,12 +1,10 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import ParticleField from './ParticleField';
 import HeroGlow from './HeroGlow';
 
 const SURVEY_URL = 'https://heads-and-hands-survey.onrender.com/';
-// TODO: confirm researcher contact email
-const CONTACT_EMAIL = 'mailto:heads-and-hands@mit.edu';
+const CONTACT_EMAIL = 'mailto:hello@minds-and-hands.com';
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
@@ -16,15 +14,16 @@ export default function HeroSection() {
   useEffect(() => {
     const t = window.setTimeout(() => {
       rootRef.current?.classList.add('hero-in');
-    }, 250);
+    }, 200);
     return () => window.clearTimeout(t);
   }, []);
 
   return (
     <section
       ref={rootRef}
-      className="relative w-full h-screen min-h-[640px] overflow-hidden bg-navy"
+      className="relative w-full min-h-screen overflow-hidden"
     >
+      {/* Background artwork — clean text-free hand+brain ink-wash plate */}
       <img
         src={`${BASE}/pics/background.png`}
         alt=""
@@ -33,70 +32,174 @@ export default function HeroSection() {
         draggable={false}
       />
 
+      {/* Brain glow — sits on top of the actual brain in the artwork */}
       <HeroGlow />
-      <ParticleField />
 
-      <div className="relative z-10 h-full flex items-center">
-        <div className="w-full max-w-[640px] pl-8 md:pl-20 pr-8">
+      {/* Ambient slow-drifting blue blobs (pure-blue family) */}
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
+        <div
+          className="blob blob-a"
+          style={{
+            width: 520,
+            height: 520,
+            left: '-8%',
+            top: '12%',
+            background:
+              'radial-gradient(circle, rgba(62,139,255,0.32) 0%, rgba(62,139,255,0) 65%)',
+          }}
+        />
+        <div
+          className="blob blob-b"
+          style={{
+            width: 460,
+            height: 460,
+            left: '38%',
+            top: '54%',
+            background:
+              'radial-gradient(circle, rgba(124,196,255,0.22) 0%, rgba(124,196,255,0) 65%)',
+          }}
+        />
+        <div
+          className="blob blob-c"
+          style={{
+            width: 380,
+            height: 380,
+            right: '4%',
+            bottom: '-6%',
+            background:
+              'radial-gradient(circle, rgba(30,95,204,0.22) 0%, rgba(30,95,204,0) 65%)',
+          }}
+        />
+      </div>
+
+      {/* Readability scrim — darker on the left where text sits,
+          fading to transparent over the artwork on the right. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'linear-gradient(90deg, rgba(5,15,35,0.92) 0%, rgba(10,25,55,0.7) 38%, rgba(10,25,55,0.25) 62%, rgba(10,25,55,0) 100%)',
+        }}
+      />
+      {/* Mobile vertical scrim */}
+      <div
+        aria-hidden="true"
+        className="md:hidden absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'linear-gradient(180deg, rgba(5,15,35,0.55) 0%, rgba(5,15,35,0.85) 60%, rgba(5,15,35,0.95) 100%)',
+        }}
+      />
+      {/* Bottom fade into next section */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-40 pointer-events-none"
+        style={{
+          background:
+            'linear-gradient(180deg, rgba(10,30,63,0) 0%, var(--navy-mid) 100%)',
+        }}
+      />
+
+      {/* Top nav (transparent over hero) */}
+      <header className="relative z-20">
+        <div className="mx-auto max-w-[1240px] px-6 md:px-10 pt-6 md:pt-8 flex items-center">
           <img
             src={`${BASE}/pics/m3s_logo.png`}
-            alt="M3S Lab"
-            className="hero-fade h-20 md:h-24 w-auto mb-10 select-none"
-            style={{ transitionDelay: '0ms', transitionDuration: '700ms' }}
+            alt="M3S Lab — Mens, Manus, and Machina"
+            className="h-24 md:h-28 w-auto select-none"
             draggable={false}
           />
+        </div>
+      </header>
+
+      {/* Hero content */}
+      <div className="relative z-10 mx-auto max-w-[1240px] px-6 md:px-10 pt-16 md:pt-24 pb-24 md:pb-32">
+        <div className="max-w-[640px]">
+          <p
+            className="hero-fade eyebrow"
+            style={{ transitionDelay: '120ms', transitionDuration: '700ms' }}
+          >
+            A study of researchers &amp; AI
+          </p>
 
           <h1
-            className="text-white font-medium leading-[1.1]"
-            style={{ fontSize: 'clamp(40px, 6vw, 64px)' }}
+            className="text-white mt-5 font-extrabold tracking-tight"
+            style={{
+              fontSize: 'clamp(40px, 6.2vw, 72px)',
+              lineHeight: 1.04,
+              letterSpacing: '-0.02em',
+            }}
           >
             <span
               className="hero-fade block"
-              style={{ transitionDelay: '150ms', transitionDuration: '800ms' }}
+              style={{ transitionDelay: '220ms', transitionDuration: '800ms' }}
             >
-              Minds &amp; Hands
+              How researchers think and work
             </span>
             <span
-              className="hero-fade block"
-              style={{ transitionDelay: '280ms', transitionDuration: '800ms' }}
+              className="hero-fade block accent-text"
+              style={{ transitionDelay: '360ms', transitionDuration: '800ms' }}
             >
-              in Research Process
+              alongside AI.
             </span>
           </h1>
 
           <p
             className="hero-fade mt-7 text-white"
             style={{
-              fontSize: 'clamp(20px, 2.2vw, 28px)',
-              lineHeight: 1.5,
-              maxWidth: '560px',
-              transitionDelay: '400ms',
+              fontSize: 'clamp(17px, 1.5vw, 20px)',
+              lineHeight: 1.55,
+              maxWidth: '540px',
+              transitionDelay: '500ms',
               transitionDuration: '700ms',
             }}
           >
-            A study of how researchers across disciplines think and work alongside AI.
+            Map how much AI is really involved and how much you&apos;d want it to be across
+            every stage of research, from framing the question to writing it up.
           </p>
 
           <div
-            className="hero-fade mt-10 flex flex-col gap-2.5 w-full max-w-[340px]"
-            style={{ transitionDelay: '540ms', transitionDuration: '600ms' }}
+            className="hero-fade mt-9 flex flex-col sm:flex-row gap-3 sm:gap-4"
+            style={{ transitionDelay: '640ms', transitionDuration: '600ms' }}
           >
             <a
               href={SURVEY_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-center bg-white text-navy font-medium rounded transition-[background,transform] duration-150 active:scale-[0.98] hover:bg-white/90"
-              style={{ padding: '14px 24px', fontSize: '15px' }}
+              className="btn-primary"
             >
               Participate in the study →
             </a>
-            <a
-              href={CONTACT_EMAIL}
-              className="block text-center text-white font-medium rounded border border-white transition-[background,transform] duration-150 active:scale-[0.98] hover:bg-white/10"
-              style={{ padding: '14px 24px', fontSize: '15px' }}
-            >
+            <a href={CONTACT_EMAIL} className="btn-ghost">
               Contribute to the research →
             </a>
+          </div>
+
+          {/* Research-expectation meta line */}
+          <div
+            className="hero-fade mt-7"
+            style={{ transitionDelay: '780ms', transitionDuration: '600ms' }}
+          >
+            <p
+              className="text-white"
+              style={{
+                fontSize: '13px',
+                lineHeight: 1.6,
+                letterSpacing: '0.01em',
+              }}
+            >
+              ~5 minutes · anonymous · a research study.
+            </p>
+            <p
+              className="mt-1 text-white"
+              style={{
+                fontSize: '12.5px',
+                lineHeight: 1.6,
+              }}
+            >
+              MIT COUHES IRB Protocol #E-7647.
+            </p>
           </div>
         </div>
       </div>

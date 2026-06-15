@@ -33,8 +33,15 @@ export default function HeroGlow() {
     window.addEventListener('resize', handleResize);
 
     function drawGlow(width: number, height: number, tick: number) {
-      const cx = width * 0.76;
-      const cy = height * 0.30;
+      // Background art has ~2:1 aspect, rendered object-cover object-right.
+      // Scaled image dims:
+      const artScaledWidth = Math.max(width, height * 2);
+      const artScaledHeight = artScaledWidth / 2;
+      // Brain in original art is at ~77% x, 16% y. Anchor relative to the
+      // right edge of the (right-aligned) image so the glow stays on the
+      // brain across viewport sizes.
+      const cx = Math.max(width * 0.55, width - 0.23 * artScaledWidth);
+      const cy = Math.max(40, 0.16 * artScaledHeight);
       const pulse = Math.sin(tick * 0.016);
 
       // Outer halo — soft warm white, ~2.5x previous

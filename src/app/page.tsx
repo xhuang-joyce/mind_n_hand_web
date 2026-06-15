@@ -1,5 +1,6 @@
 import HeroSection from '@/components/HeroSection';
 import DiscoverSection from '@/components/DiscoverSection';
+import StagesSection from '@/components/StagesSection';
 import HowItWorksSection from '@/components/HowItWorksSection';
 import AboutSection from '@/components/AboutSection';
 import FinalCTASection from '@/components/FinalCTASection';
@@ -10,6 +11,7 @@ export default function Home() {
     <main>
       <HeroSection />
       <DiscoverSection />
+      <StagesSection />
       <HowItWorksSection />
       <AboutSection />
       <FinalCTASection />

@@ -1,154 +1,172 @@
 import ArchetypeRadar, { type RadarPoint } from './ArchetypeRadar';
-import ParticleField from './ParticleField';
 import Reveal from './Reveal';
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
-const PLACEHOLDER_RADAR: RadarPoint[] = [
+const SAMPLE_RADAR: RadarPoint[] = [
   { stage: 1, q3Actual: 35, q3Desired: 50 },
   { stage: 2, q3Actual: 72, q3Desired: 60 },
-  { stage: 3, q3Actual: 20, q3Desired: 40 },
+  { stage: 3, q3Actual: 28, q3Desired: 45 },
   { stage: 4, q3Actual: 55, q3Desired: 55 },
-  { stage: 5, q3Actual: 10, q3Desired: 25 },
-  { stage: 6, q3Actual: 80, q3Desired: 70 },
-  { stage: 7, q3Actual: 60, q3Desired: 65 },
-  { stage: 8, q3Actual: 45, q3Desired: 30 },
+  { stage: 5, q3Actual: 18, q3Desired: 30 },
+  { stage: 6, q3Actual: 80, q3Desired: 68 },
+  { stage: 7, q3Actual: 62, q3Desired: 70 },
+  { stage: 8, q3Actual: 45, q3Desired: 35 },
 ];
 
-function PadlockOverlay() {
-  return (
-    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-      <svg
-        width="32"
-        height="32"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="#ffffff"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-      </svg>
-    </div>
-  );
-}
+const ARCHETYPE_TEASERS = ['Seeker.png', 'Wayfarer.png', 'Trailblazer.png', 'Forger.png'];
 
 export default function DiscoverSection() {
   return (
-    <section className="relative overflow-hidden bg-navy py-[64px] md:py-[120px] px-6">
-      <ParticleField />
-      <div className="relative z-10 mx-auto max-w-[860px]">
-        <Reveal as="div" className="text-center mb-14">
-          <h2 className="text-white font-medium text-[32px] md:text-[40px] leading-tight">
-            What you&apos;ll discover
-          </h2>
-          <p
-            className="mt-4 text-white text-base md:text-lg mx-auto"
-            style={{ lineHeight: 1.7, maxWidth: '460px' }}
-          >
-            Complete the survey.
-            <br />
-            See your researcher profile.
-          </p>
-        </Reveal>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Card 1 — Radar teaser */}
-          <Reveal
-            as="article"
-            delayMs={0}
-            className="rounded-xl p-8"
+    <section className="relative py-[80px] md:py-[128px] px-6">
+      <div className="relative z-10 mx-auto max-w-[1100px]">
+        <Reveal as="div" className="text-center mb-14 md:mb-16">
+          <p className="eyebrow">What you&apos;ll discover</p>
+          <h2
+            className="text-white font-extrabold mt-4 tracking-tight"
             style={{
-              background: 'rgba(255,255,255,0.06)',
-              border: '1px solid rgba(255,255,255,0.18)',
+              fontSize: 'clamp(28px, 4vw, 44px)',
+              lineHeight: 1.12,
+              letterSpacing: '-0.015em',
             }}
           >
-            <div className="relative w-full h-[360px]">
-              <div
-                className="absolute inset-0"
-                style={{
-                  filter: 'blur(5px)',
-                  opacity: 0.6,
-                  pointerEvents: 'none',
-                }}
-              >
-                <ArchetypeRadar stages={PLACEHOLDER_RADAR} locale="en" />
-              </div>
-              <PadlockOverlay />
+            Complete the survey.<br />
+            See your researcher profile.
+          </h2>
+        </Reveal>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          {/* Card 1 — Radar / workflow profile */}
+          <Reveal as="article" delayMs={0} className="glass-card p-7 md:p-8">
+            <p className="eyebrow">Your AI workflow profile</p>
+            <h3
+              className="text-white font-bold mt-3"
+              style={{ fontSize: '22px', lineHeight: 1.25, letterSpacing: '-0.01em' }}
+            >
+              Your research-stage radar chart
+            </h3>
+            <p
+              className="mt-3 text-white"
+              style={{ fontSize: '15px', lineHeight: 1.6 }}
+            >
+              See how your actual AI use compares to your ideal across every stage of the
+              research process.
+            </p>
+
+            <div className="relative w-full mt-5" style={{ height: 320 }}>
+              <ArchetypeRadar stages={SAMPLE_RADAR} locale="en" compact />
             </div>
 
-            <div className="mt-6">
-              <p
-                className="uppercase text-white"
-                style={{
-                  fontSize: '12px',
-                  letterSpacing: '0.1em',
-                }}
-              >
-                Your AI workflow profile
-              </p>
-              <h3 className="text-white font-medium mt-2" style={{ fontSize: '20px' }}>
-                Your research stage radar chart
-              </h3>
-              <p
-                className="mt-3 text-white"
-                style={{ fontSize: '15px', lineHeight: 1.6 }}
-              >
-                See how your actual AI use compares to your ideal — across every stage of the
-                research process.
-              </p>
+            {/* Legend */}
+            <div className="mt-4 flex items-center gap-5 text-[12.5px] text-white">
+              <span className="inline-flex items-center gap-2">
+                <span
+                  aria-hidden="true"
+                  style={{
+                    display: 'inline-block',
+                    width: 22,
+                    height: 0,
+                    borderTop: '2px solid #7CC4FF',
+                  }}
+                />
+                Actual use
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <span
+                  aria-hidden="true"
+                  style={{
+                    display: 'inline-block',
+                    width: 22,
+                    height: 0,
+                    borderTop: '2px dashed #3E8BFF',
+                  }}
+                />
+                Ideal use
+              </span>
+              <span className="ml-auto text-white" style={{ fontSize: '11.5px' }}>
+                Sample
+              </span>
             </div>
           </Reveal>
 
-          {/* Card 2 — Archetype image teaser */}
-          {/* TODO: project lead to confirm which archetype image (2.png or 7.png) to use in S2 */}
-          <Reveal
-            as="article"
-            delayMs={120}
-            className="rounded-xl p-8"
-            style={{
-              background: 'rgba(255,255,255,0.06)',
-              border: '1px solid rgba(255,255,255,0.18)',
-            }}
-          >
-            <div className="relative w-full h-[360px] overflow-hidden rounded-md">
-              <img
-                src={`${BASE}/pics/2.png`}
-                alt=""
-                aria-hidden="true"
-                className="w-full h-full object-cover"
-                style={{
-                  filter: 'blur(5px)',
-                  opacity: 0.6,
-                  pointerEvents: 'none',
-                }}
-                draggable={false}
-              />
-              <PadlockOverlay />
-            </div>
+          {/* Card 2 — Archetype teaser (blurred behind glass) */}
+          <Reveal as="article" delayMs={120} className="glass-card p-7 md:p-8">
+            <p className="eyebrow">Your researcher archetype</p>
+            <h3
+              className="text-white font-bold mt-3"
+              style={{ fontSize: '22px', lineHeight: 1.25, letterSpacing: '-0.01em' }}
+            >
+              One of sixteen profiles
+            </h3>
+            <p
+              className="mt-3 text-white"
+              style={{ fontSize: '15px', lineHeight: 1.6 }}
+            >
+              A shareable read on how you think and work alongside AI.
+            </p>
 
-            <div className="mt-6">
-              <p
-                className="uppercase text-white"
+            {/* Blurred 4-up archetype grid, behind a frosted glass layer */}
+            <div
+              className="relative w-full mt-5 overflow-hidden rounded-lg"
+              style={{ height: 320 }}
+            >
+              <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 gap-2 p-2">
+                {ARCHETYPE_TEASERS.map((file) => (
+                  <div
+                    key={file}
+                    className="relative overflow-hidden rounded-md"
+                    style={{ background: 'rgba(255,255,255,0.04)' }}
+                  >
+                    <img
+                      src={`${BASE}/pics/${file}`}
+                      alt=""
+                      aria-hidden="true"
+                      draggable={false}
+                      className="w-full h-full object-cover select-none"
+                      style={{
+                        filter: 'blur(14px) saturate(115%)',
+                        transform: 'scale(1.15)',
+                        opacity: 0.85,
+                      }}
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 rounded-md pointer-events-none"
+                      style={{ border: '1px solid rgba(255,255,255,0.07)' }}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Frosted overlay so it reads as "behind glass" */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 pointer-events-none"
                 style={{
-                  fontSize: '12px',
-                  letterSpacing: '0.1em',
+                  background:
+                    'linear-gradient(180deg, rgba(10,25,55,0.30) 0%, rgba(10,25,55,0.55) 100%)',
+                  backdropFilter: 'blur(2px)',
+                  WebkitBackdropFilter: 'blur(2px)',
                 }}
-              >
-                Your researcher archetype
-              </p>
-              <h3 className="text-white font-medium mt-2" style={{ fontSize: '20px' }}>
-                1 of 18 types
-              </h3>
-              <p
-                className="mt-3 text-white"
-                style={{ fontSize: '15px', lineHeight: 1.6 }}
-              >
-                Discover which of 18 research profile matches how you think and work with AI.
-              </p>
+              />
+
+              {/* Caption pinned bottom-left, crisp on top of blur */}
+              <div className="absolute left-3 bottom-3 right-3 flex items-end justify-between gap-3 pointer-events-none">
+                <p
+                  className="text-white"
+                  style={{
+                    fontSize: '12.5px',
+                    fontWeight: 500,
+                    lineHeight: 1.45,
+                    textShadow: '0 1px 6px rgba(0,0,0,0.4)',
+                  }}
+                >
+                  Revealed at the end of the survey.
+                </p>
+                <span className="eyebrow text-white" style={{ fontSize: '11px' }}>
+                  1 of 16
+                </span>
+              </div>
             </div>
           </Reveal>
         </div>

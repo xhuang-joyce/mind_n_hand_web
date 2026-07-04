@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import HeroGlow from './HeroGlow';
 
 const SURVEY_URL = 'https://heads-and-hands-survey.onrender.com/';
-const CONTACT_EMAIL = 'mailto:hello@minds-and-hands.com';
+const CONTRIBUTE_URL = 'https://forms.gle/dnudYueidzQj46sh6';
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
@@ -171,7 +171,12 @@ export default function HeroSection() {
             >
               Participate in the study →
             </a>
-            <a href={CONTACT_EMAIL} className="btn-ghost">
+            <a
+              href={CONTRIBUTE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-ghost"
+            >
               Contribute to the research →
             </a>
           </div>
